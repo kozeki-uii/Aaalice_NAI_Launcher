@@ -1,5 +1,7 @@
 # NAI Launcher
 
+> **Linux 社群維護分支**：基於上游 `v4.3.0`，目前支援範圍為 Arch/CachyOS x86_64，真實帳號生圖驗收待完成，Linux Release 和 AUR 尚未發布。Linux 暫不支援 DLSS 增強、讀取系統安裝字型及應用程式內更新安裝；Ubuntu/AppImage 尚未驗證。
+
 <p align="center">
   <a href="README.md">简体中文</a> · 繁體中文 · <a href="README.en-US.md">English</a>
 </p>

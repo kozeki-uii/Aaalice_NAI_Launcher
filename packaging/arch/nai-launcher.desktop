@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=NAI Launcher
+GenericName=NovelAI Client
+Comment=NovelAI 第三方创作客户端
+Comment[en]=A third-party NovelAI creation client
+Exec=/usr/bin/nai-launcher
+Icon=nai-launcher
+Terminal=false
+StartupNotify=true
+StartupWMClass=com.aaalice.nai_launcher
+Categories=Graphics;

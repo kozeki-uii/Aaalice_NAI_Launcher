@@ -86,6 +86,21 @@ Windows release 产物位于 `build/windows/x64/runner/Release/`。macOS 使用 
 - 修改插件版本或 Windows C++ 后必须完整重建。独立窗口存在或 session marker 留有 PID 不等于构建成功；应确认控制台出现原生构建成功/启动标记、真实 `nai_launcher` 进程存在，依赖变化时再核对插件 DLL 时间戳，然后才让用户复现。
 - Windows 最小化会让窗口 constraints 短暂归零，响应式布局可能因此销毁并重建面板子树；滚动位置、是否跟随最新内容等必须跨 Widget/Controller 生命周期的 viewport 状态应由更高层稳定 owner 按会话保存。重建 ScrollController 时必须用保存值设置 `initialScrollOffset`，在首帧直接呈现原位置；不得先渲染默认位置再通过 post-frame `jumpTo` 恢复，否则会出现跳到底部后拉回的闪烁。
 
+## Linux 社区构建
+
+Linux 分支以 `v4.3.0` 为基线，目前仅验收 Arch/CachyOS x86_64。使用 Flutter 3.47.5、PowerShell 7+、Git LFS、clang、cmake、ninja、pkgconf 和 Rust；原生依赖见 `packaging/arch/PKGBUILD.in`。Arch 打包另需 python、makepkg、zstd 和 desktop-file-utils。
+
+首次从干净 checkout 构建时生成上游代码；普通重建省略 `-Generate`。数据库由上游 manifest 锁定并验证，Git 中保留原有 LFS pointer。
+
+```powershell
+pwsh -NoProfile -File scripts/build_linux.ps1 -Generate -PackageArch
+pwsh -NoProfile -File scripts/run_flutter_tests.ps1 -TimeoutSeconds 120 -NoPub -NoTestAssets -Path "test/core/platform/platform_capabilities_test.dart,test/core/mcp/mcp_cli_path_test.dart,test/presentation/providers/startup_laziness_static_contract_test.dart"
+```
+
+Release bundle 位于 `build/linux/x64/release/bundle/`，同时包含主程序和 MCP CLI。Arch 安装包及 SHA256 位于 `dist/`；`packaging/arch/PKGBUILD.in` 是本地打包模板，尚未配置 AUR 公开下载来源。
+
+保留现有两项 Clang 插件兼容设置：tray_manager 的 `-Wno-error=deprecated-declarations` 和 flutter_secure_storage_linux 的 `-Wno-error=deprecated-literal-operator`。弃用警告仍显示，未禁用运行功能。
+
 ## 代码风格与命名约定
 
 遵循 `analysis_options.yaml` 和 Dart 默认格式化规则，使用两个空格缩进。变量和方法使用 `lowerCamelCase`，类型使用 `UpperCamelCase`。Riverpod provider 命名应以 `Provider` 或 `NotifierProvider` 结尾。新增功能优先复用现有 service、provider、widget 和 utility，保持 `core`、`data`、`presentation` 的职责边界清晰。

@@ -1,5 +1,7 @@
 # NAI Launcher
 
+> **Community-maintained Linux branch**: Based on upstream `v4.3.0`, with Arch/CachyOS x86_64 as the current support target. Image generation with a real account still needs acceptance testing; Linux releases and AUR packages have not been published. Linux currently lacks DLSS enhancement, enumeration of installed system fonts, and in-app update installation. Ubuntu/AppImage compatibility has not been verified.
+
 <p align="center">
   <a href="README.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a> · English
 </p>

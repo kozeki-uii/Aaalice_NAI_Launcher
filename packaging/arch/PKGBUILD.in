@@ -1,0 +1,37 @@
+pkgname=nai-launcher
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='NovelAI third-party creation client (community Linux build)'
+arch=('x86_64')
+url='https://github.com/Aaalice233/Aaalice_NAI_Launcher'
+license=('MIT')
+depends=('glibc>=@GLIBC@' 'gcc-libs' 'gtk3' 'libsecret' 'libayatana-appindicator'
+         'gstreamer' 'gst-plugins-base-libs' 'libepoxy' 'mpv' 'libx11' 'libxrandr')
+optdepends=('gst-plugins-good: additional audio codecs'
+            'gst-plugins-bad: additional audio codecs'
+            'gst-plugins-ugly: additional audio codecs'
+            'gst-libav: FFmpeg GStreamer codecs'
+            'gnome-keyring: Secret Service credential storage (or another provider)')
+options=('!strip' '!debug')
+source=('nai-launcher-@VERSION@-linux-x86_64.tar.zst' 'LICENSE'
+        'THIRD_PARTY_NOTICES.md' 'nai-launcher.desktop'
+        'nai-launcher' 'nai-launcher-mcp' 'nai-launcher.png')
+sha256sums=(
+  @SHA256SUMS@
+)
+
+package() {
+  install -d "$pkgdir/opt/nai-launcher"
+  cp -a "$srcdir/data" "$srcdir/lib" "$srcdir/nai_launcher" \
+    "$srcdir/nai_launcher_mcp" "$pkgdir/opt/nai-launcher/"
+  install -Dm755 "$srcdir/nai-launcher" "$pkgdir/usr/bin/nai-launcher"
+  install -Dm755 "$srcdir/nai-launcher-mcp" "$pkgdir/usr/bin/nai-launcher-mcp"
+  install -Dm644 "$srcdir/nai-launcher.desktop" \
+    "$pkgdir/usr/share/applications/com.aaalice.nai_launcher.desktop"
+  install -Dm644 "$srcdir/nai-launcher.png" \
+    "$pkgdir/usr/share/pixmaps/nai-launcher.png"
+  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/THIRD_PARTY_NOTICES.md" \
+    "$pkgdir/usr/share/licenses/$pkgname/THIRD_PARTY_NOTICES.md"
+  cp -a "$srcdir/licenses/fonts" "$pkgdir/usr/share/licenses/$pkgname/"
+}

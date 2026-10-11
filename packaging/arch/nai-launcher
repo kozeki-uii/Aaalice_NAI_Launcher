@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/nai-launcher/nai_launcher "$@"

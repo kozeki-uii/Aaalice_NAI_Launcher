@@ -284,6 +284,5 @@ mask_upload_*.md
 !macos/Flutter/
 !macos/Flutter/*.xcconfig
 flutter_windows.zip
-dist/*.zip
-dist/*.exe
+/dist/
 .kimi/

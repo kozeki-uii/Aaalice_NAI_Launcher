@@ -94,6 +94,7 @@ final startupInitializationTasksProvider = Provider<StartupInitializationTasks>(
           VideoPlayerMediaKit.ensureInitialized(
             windows: platform.isWindows,
             macOS: platform.isMacOS,
+            linux: platform.isLinux,
           );
         } catch (error, stackTrace) {
           AppLogger.e(
